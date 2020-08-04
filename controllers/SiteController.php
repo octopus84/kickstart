@@ -9,9 +9,50 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\ValidarFormulario;
 
 class SiteController extends Controller
 {
+
+    /*my first action
+    @return message 
+    */
+    public function actionSay($get = "Tutorial Yii2"){
+        $message = 'Hola Mundo a todos';
+        $numeros = [0,1,2,3,4,5];
+        return $this->render('say', 
+        [
+            'message' => $message,
+            'array' => $numeros,
+            'get' => $get,
+            ]);
+    }
+
+    public function actionFormulario($mensaje=null){
+        return $this->render("formulario", ["mensaje"=>$mensaje]);
+    }
+
+    public function actionRequest(){
+        $mensaje =null;
+        if (isset($_REQUEST["nombre"])) {
+             $mensaje ="Has ingresado tu nombre correctamente ".$_REQUEST["nombre"];
+        }
+        $this->redirect (["site/formulario", "mensaje"=>$mensaje]);
+    }
+    
+    public function actionValidarFormulario(){
+        /*$model = new ValidarFormulario;
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()){
+                //aqui se puedde consultar bbdd
+            }else{
+                $model->getErrors();
+            }
+        }
+        return $this->render("validarformulario", ["model" => $model]);*/
+        return $this->render("validarformulario");
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -125,4 +166,6 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+
 }
